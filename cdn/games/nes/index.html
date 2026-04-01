@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>NES 游戏列表</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #1a1a1a; color: #fff; }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #ffcc00; text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 12px 0; }
+    a { 
+      color: #fff; 
+      text-decoration: none; 
+      background: #333; 
+      padding: 12px 20px; 
+      border-radius: 8px;
+      display: block;
+      transition: all 0.2s;
+    }
+    a:hover { background: #ffcc00; color: #000; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>NES 游戏列表</h1>
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    const zipFiles = [
+      "1942 (JU).zip",
+      "8 Eye_2527s (J).zip",
+      "9 in 1 (Ninja Cat) (Unl).zip",
+      "Abadox (J).zip",
+      "Abarenbou Tengu (J).zip",
+      "Adventures of Dino Riki.zip",
+      "Adventures of Lolo (J).zip",
+      "Ai Sensei No Oshiete - Watashi No Hoshi (J).zip",
+      "Aigiina No Yogen (J).zip",
+      "Air Fortress - Kuuchuu Yousai (J).zip",
+      "Akumajou Special - Boku Dracula Kun (J).zip",
+      "Aladdin (Unl).zip",
+      "Alien Syndrome (J).zip",
+      "All Night Nippon Super Mario Bros [p1].zip",
+      "Argus (J).zip",
+      "Arkanoid (J).zip",
+      "Armed Dragon Fantasy Villgust (J).zip",
+      "Arumajiro (J).zip",
+      "Asmik Kun Land (J).zip",
+      "ASO - Armored Scrum Object (J).zip",
+      "Astro Robo Sasa (J).zip",
+      "Atlantis No Nazo (J).zip",
+      "Babel No Tou (J).zip",
+      "Baltron (J).zip",
+      "Banana (J).zip",
+      "Bananan Ouji No Daibouken (J).zip",
+      "Baseball Stars (J).zip",
+      "Battle City (J).zip",
+      "Battle Tank.zip",
+      "Best Play - Pro Yakyuu (J).zip",
+      "BrainSeries13in1.zip",
+      "Bubble Bobble.zip",
+      "Bump 'n' Jump.zip",
+      "Chip & Dale 3 (Heavy Barrel Hack) [p1].zip",
+      "Chip Dale Rescue Rangers 2.zip",
+      "Choujikuu Yousai - Macross (J).zip",
+      "Chouwakusei Senki - Metafight (J).zip",
+      "Contra (J).zip",
+      "Double Dragon 3 - The Rosetta Stone (J).zip",
+      "Dynamite Batman (J).zip",
+      "Earth Worm Jim 3 (Unl) [p1][a1].zip",
+      "Empire Strikes Back, The (J).zip",
+      "F-15 City War (U).zip",
+      "Fantasy Zone 2 - The Teardrop of Opa-Opa (J).zip",
+      "FC Genjin - Freakthoropus Computerus (J).zip",
+      "Ferrari Grand Prix Challenge (J).zip",
+      "Fighting Road (J).zip",
+      "Final Mission (J).zip",
+      "Garfield - A Week of Garfield (J).zip",
+      "George Foreman_2527s KO Boxing (U).zip",
+      "Gevara (J).zip",
+      "Goonies, The (J).zip",
+      "Great Tank (J).zip",
+      "Harry Tour(Unl)(Dumped by maxzhou88).zip",
+      "Hiryuu No Ken 2 - Dragon No Tsubasa (J).zip",
+      "Hoshi No Kirby - Yume No Izumi No Monogatari (J).zip",
+      "Ikari 3 (J).zip",
+      "Indora No Hikari (J).zip",
+      "Jackie Chan (J).zip",
+      "Juju Densetsu (J).zip",
+      "Jumpin_2527 Kid - Jappu To Mame No Ki Monogatari (J).zip",
+      "Kage (J).zip",
+      "Kaiketsu Yanchamaru 2 - Karakuri Land (J).zip",
+      "Kamen No Ninja - Hanamaru (J).zip",
+      "Kart Fighter.zip",
+      "Kirby's Adventure.zip",
+      "Kung-Fu Heroes.zip",
+      "Kunio_Kun_No_Jidaigekidayo_Zenin_Shuugou(C)0.91.zip",
+      "Lion King, The (1995) (Unl) [!].zip",
+      "Little Samson.zip",
+      "Mario Bros (JU).zip",
+      "Mario Different Levels (J).zip",
+      "Megaman3.zip",
+      "Mickey's Safari in Letterland.zip",
+      "Mortal Kombat IV.zip",
+      "Ninja Kun (J).zip",
+      "Ninja Ryuukenden 3 - Yomi No Hakobune (J).zip",
+      "ninja training (Conqueror hack).zip",
+      "Ninja Turtles Fighting@Unlimited Marble.zip",
+      "Pac-Man (Namco).zip",
+      "Platoon.zip",
+      "pnccn.zip",
+      "Pocket Monster (Pirate Original) [!].zip",
+      "Red Pig (Tale Spin hack) [p1].zip",
+      "Snake Rattle 'n Roll.zip",
+      "Snowbros.zip",
+      "Sonic 3D Blast 5 [!].zip",
+      "Spider-Man.zip",
+      "Splatterhouse - Wanpaku Graffiti (English v2_0).zip",
+      "Street Fighter 3.zip",
+      "Street Fighter V (20 peoples) (Unl) (Pirate Original).zip",
+      "Summer Carnival _252792 - Recca (J)new.zip",
+      "Super Contra (J).zip",
+      "Super Mario Bros 3 (J).zip",
+      "super_bros_1985@Infinite_Life.zip",
+      "super_bros_1985@Invincible.zip",
+      "super_bros_1985@Stealth.zip",
+      "super_contra@Infinite_Life.zip",
+      "super_USA_@Infinite_Blood.zip",
+      "T2.zip",
+      "Takahashi Meijin No Boukenjima 3 (J).zip",
+      "Takahashi Meijin No Boukenjima 4 (J).zip",
+      "Teenage Mutant Ninja Turtles III - The Manhattan Project hack by shinwa.zip",
+      "Teenage Mutant Ninja Turtles Tournament Fighters (U).zip",
+      "Tekken 3 [p1][h1].zip",
+      "Tetris.zip",
+      "Tiny Toon Adventures.zip",
+      "tyc.zip",
+      "Ultimate League Soccer.zip",
+      "YS90tank.zip",
+    ];
+
+    const list = document.getElementById('fileList');
+    zipFiles.forEach(file => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = file;
+      a.textContent = file.replace('.zip', '');
+      a.target = '_blank';
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
