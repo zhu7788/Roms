@@ -1,0 +1,4 @@
+showall:0
+url:https://play.google.com/store/apps/details?id=nes.emulator.supergame
+bannerAd:0
+ver:71
