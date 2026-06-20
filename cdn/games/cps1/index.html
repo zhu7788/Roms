@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>CPS1 游戏列表</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #1a1a1a; color: #fff; }
+    .container { max-width: 800px; margin: 0 auto; }
+    h1 { color: #ffcc00; text-align: center; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 12px 0; }
+    a { 
+      color: #fff; 
+      text-decoration: none; 
+      background: #333; 
+      padding: 12px 20px; 
+      border-radius: 8px;
+      display: block;
+      transition: all 0.2s;
+    }
+    a:hover { background: #ffcc00; color: #000; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>CPS1 游戏列表</h1>
+    <ul id="fileList"></ul>
+  </div>
+
+  <script>
+    const zipFiles = [
+      "alpham2.zip",
+      "captcomm.zip",
+      "dino.zip",
+      "knights.zip",
+      "knightsj.zip",
+      "megaman.zip",
+      "msword.zip",
+      "mswordu.zip",
+      "nemo.zip",
+      "nemor1.zip",
+      "pokonyan.zip",
+      "punisher.zip",
+      "punisherh.zip",
+      "willow.zip",
+      "willowuo.zip",
+      "wof.zip",
+      "wofj.zip",
+    ];
+
+    const list = document.getElementById('fileList');
+    zipFiles.forEach(file => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = file;
+      a.textContent = file.replace('.zip', '');
+      a.target = '_blank';
+      li.appendChild(a);
+      list.appendChild(li);
+    });
+  </script>
+</body>
+</html>
